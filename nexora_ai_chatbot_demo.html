@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXORA AI — Smart Business Assistant</title>
+<style>
+:root{--navy:#102b35;--teal:#20b99b;--ink:#18272d;--muted:#64747b;--bg:#f3f7f7;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--navy);color:white;padding:22px max(22px,calc((100% - 1080px)/2));display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-size:22px;font-weight:800;letter-spacing:1.4px}.brand span{color:#67e0c7}.tag{font-size:12px;color:#c5d8dc}
+main{max-width:1080px;margin:34px auto;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.panel{background:white;border-radius:20px;padding:26px;box-shadow:0 10px 35px #16343b0d}
+h1{font-size:clamp(28px,4vw,42px);line-height:1.1;margin:12px 0}.eyebrow{color:#118c78;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;font-size:12px}
+p{color:var(--muted);line-height:1.6}.chips{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}.chip{border:1px solid #d9e5e5;background:white;border-radius:999px;padding:8px 12px;cursor:pointer}
+.chip.active,.primary{background:var(--navy);color:white;border-color:var(--navy)}
+.chat{display:flex;flex-direction:column;min-height:560px}.chat-head{display:flex;align-items:center;gap:12px;border-bottom:1px solid #e6eeee;padding-bottom:16px}
+.avatar{width:42px;height:42px;border-radius:14px;background:#dff8f1;color:#087c68;display:grid;place-items:center;font-weight:900}
+.status{font-size:12px;color:#138a72}.messages{padding:18px 0;display:flex;flex-direction:column;gap:12px;flex:1;max-height:360px;overflow:auto}
+.msg{padding:12px 14px;border-radius:16px;max-width:88%;line-height:1.45;font-size:14px;white-space:pre-wrap}
+.bot{background:#eef5f4;align-self:flex-start}.user{background:var(--navy);color:white;align-self:flex-end}
+.quick{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}.quick button{font-size:12px;border:1px solid #d8e5e3;background:white;border-radius:999px;padding:8px 10px;cursor:pointer}
+form{display:flex;gap:8px}input{min-width:0;flex:1;border:1px solid #d6e2e2;border-radius:12px;padding:13px;font:inherit}button{font:inherit;cursor:pointer}.send{background:var(--teal);color:#062c26;border:0;border-radius:12px;padding:0 18px;font-weight:800}
+.small{font-size:12px;color:#879499}.feature{display:flex;gap:12px;margin:18px 0}.feature b{display:block}.icon{width:34px;height:34px;flex:0 0 34px;border-radius:10px;background:#e6f8f3;display:grid;place-items:center}
+footer{text-align:center;padding:22px;color:#829196;font-size:12px}
+@media(max-width:760px){main{grid-template-columns:1fr;margin:18px auto}.chat{min-height:520px}header{padding:18px 20px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">NEXORA <span>AI</span></div><div class="tag">SMART BUSINESS SOLUTIONS</div></div><div class="tag">DEMO · MULTILINGUAL ASSISTANT</div></header>
+<main>
+<section class="panel">
+ <div class="eyebrow">Your business, always available</div>
+ <h1>Make every customer conversation count.</h1>
+ <p id="intro">A friendly assistant for small businesses. It answers common questions, explains your services and helps visitors contact your team.</p>
+ <div class="chips">
+  <button class="chip active" data-lang="es">🇪🇸 Español</button>
+  <button class="chip" data-lang="en">🇬🇧 English</button>
+  <button class="chip" data-lang="sr">🇷🇸 Srpski</button>
+ </div>
+ <div class="feature"><div class="icon">💬</div><div><b id="f1">Respuestas rápidas</b><span class="small" id="f1d">Preguntas frecuentes, horarios y servicios.</span></div></div>
+ <div class="feature"><div class="icon">🌍</div><div><b id="f2">Tres idiomas</b><span class="small" id="f2d">Español, inglés y serbio.</span></div></div>
+ <div class="feature"><div class="icon">📩</div><div><b id="f3">Más oportunidades</b><span class="small" id="f3d">Recoge consultas para que el negocio pueda responder.</span></div></div>
+ <p class="small" id="disclaimer">Demo: las respuestas son ejemplos. Configura los datos reales de cada negocio antes de publicarlo.</p>
+</section>
+<section class="panel chat">
+ <div class="chat-head"><div class="avatar">N</div><div><b>NEXORA Assistant</b><div class="status">● <span id="online">En línea · Demo</span></div></div></div>
+ <div class="messages" id="messages" aria-live="polite"></div>
+ <div class="quick" id="quick"></div>
+ <form id="chatForm"><input id="userInput" autocomplete="off" placeholder="Escribe tu pregunta..." aria-label="Your message"><button class="send" type="submit">➤</button></form>
+ <p class="small" id="privacy">No introduzcas datos personales reales en esta demo.</p>
+</section>
+</main>
+<footer>© NEXORA AI · Smart Business Solutions</footer>
+<script>
+const copy={
+es:{intro:"Un asistente amable para pequeñas empresas. Responde preguntas frecuentes, explica servicios y ayuda a los visitantes a contactar con tu equipo.",f1:"Respuestas rápidas",f1d:"Preguntas frecuentes, horarios y servicios.",f2:"Tres idiomas",f2d:"Español, inglés y serbio.",f3:"Más oportunidades",f3d:"Recoge consultas para que el negocio pueda responder.",disclaimer:"Demo: las respuestas son ejemplos. Configura los datos reales de cada negocio antes de publicarlo.",online:"En línea · Demo",placeholder:"Escribe tu pregunta...",privacy:"No introduzcas datos personales reales en esta demo.",welcome:"¡Hola! 👋 Soy el asistente virtual de demostración de NEXORA AI. ¿En qué puedo ayudarte?",quick:["Servicios","Horario","Precios","Hablar con una persona"],services:"Esta empresa puede configurar aquí sus servicios, productos y especialidades. En la versión para clientes añadiremos la información real del negocio.",hours:"El horario de apertura debe configurarse con el horario real de cada empresa.",prices:"Los precios dependen del servicio. En una instalación real mostraremos la lista de precios aprobada por el negocio.",human:"¡Claro! Puedes dejar tu nombre y tu consulta en el chat. En esta demo no se envían los datos a ningún negocio. Para contactar ahora, utiliza el canal oficial de la empresa.",fallback:"Gracias por tu mensaje. Soy una demo y todavía no tengo configurada la información específica de esta empresa. Puedes preguntar por servicios, horario, precios o contacto."},
+en:{intro:"A friendly assistant for small businesses. It answers common questions, explains your services and helps visitors contact your team.",f1:"Quick answers",f1d:"FAQs, opening hours and services.",f2:"Three languages",f2d:"Spanish, English and Serbian.",f3:"More opportunities",f3d:"Collects enquiries for the business to follow up.",disclaimer:"Demo: responses are examples. Add each business's real information before publishing.",online:"Online · Demo",placeholder:"Type your question...",privacy:"Please do not enter real personal information in this demo.",welcome:"Hello! 👋 I'm the NEXORA AI demo assistant. How can I help you today?",quick:["Services","Opening hours","Prices","Talk to a person"],services:"This business can add its services, products and specialties here. The client version will use the business's verified information.",hours:"The real opening hours should be added for each business.",prices:"Prices depend on the service. A live installation can show the business's approved price list.",human:"Of course! You can leave your name and enquiry in the chat. This demo does not send details to a business. Use the business's official contact channel to reach them now.",fallback:"Thanks for your message. I'm a demo and don't yet have this business's specific information. Try services, opening hours, prices or contact."},
+sr:{intro:"Ljubazan asistent za male firme. Odgovara na česta pitanja, objašnjava usluge i pomaže posetiocima da kontaktiraju firmu.",f1:"Brzi odgovori",f1d:"Česta pitanja, radno vreme i usluge.",f2:"Tri jezika",f2d:"Španski, engleski i srpski.",f3:"Više prilika",f3d:"Prikuplja upite kako bi firma mogla da odgovori.",disclaimer:"Demo: odgovori su primeri. Unesi stvarne podatke svake firme pre objavljivanja.",online:"Dostupan · Demo",placeholder:"Napiši pitanje...",privacy:"Nemoj unositi stvarne lične podatke u ovu demo verziju.",welcome:"Zdravo! 👋 Ja sam demonstracioni NEXORA AI asistent. Kako mogu da pomognem?",quick:["Usluge","Radno vreme","Cene","Razgovor sa osobom"],services:"Ovde se mogu podesiti usluge, proizvodi i specijalnosti firme. Verzija za klijente koristiće proverene podatke firme.",hours:"Ovde treba uneti stvarno radno vreme konkretne firme.",prices:"Cene zavise od usluge. U pravoj instalaciji prikazivaćemo cenovnik koji odobri firma.",human:"Naravno! Možeš ostaviti ime i pitanje u razgovoru. U ovoj demo verziji podaci se ne šalju nijednoj firmi. Za kontakt sada koristi zvanični kanal firme.",fallback:"Hvala na poruci. Ja sam demo i još nemam posebne podatke ove firme. Pitaj za usluge, radno vreme, cene ili kontakt."}
+};
+let lang="es";
+const $=id=>document.getElementById(id);
+function add(text,who){const d=document.createElement("div");d.className="msg "+who;d.textContent=text;$("messages").appendChild(d);$("messages").scrollTop=$("messages").scrollHeight}
+function render(){const c=copy[lang];["intro","f1","f1d","f2","f2d","f3","f3d","disclaimer","online","privacy"].forEach(k=>$(k).textContent=c[k]);$("userInput").placeholder=c.placeholder;$("quick").innerHTML="";c.quick.forEach((q,i)=>{const b=document.createElement("button");b.textContent=q;b.onclick=()=>reply(["services","hours","prices","human"][i]);$("quick").appendChild(b)});$("messages").innerHTML="";add(c.welcome,"bot")}
+function reply(type){const c=copy[lang];add(({services:c.services,hours:c.hours,prices:c.prices,human:c.human})[type],"bot")}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang;document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x===b));render()}));
+$("chatForm").addEventListener("submit",e=>{e.preventDefault();const v=$("userInput").value.trim();if(!v)return;add(v,"user");$("userInput").value="";const s=v.toLowerCase();let type="fallback";if(/servicio|service|uslug|proizvod/.test(s))type="services";else if(/horario|hours|radno|otvoren|open/.test(s))type="hours";else if(/precio|price|cen[ae]|koliko/.test(s))type="prices";else if(/persona|human|contact|kontakt|hablar|razgovor/.test(s))type="human";setTimeout(()=>add(copy[lang][type],"bot"),250)});
+render();
+</script>
+</body>
+</html>
